@@ -5,7 +5,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package-lock.json package.json gulpfile.js yarn.lock /usr/src/app/
+COPY package.json gulpfile.js yarn.lock /usr/src/app/
 
 RUN yarn --pure-lockfile
 
