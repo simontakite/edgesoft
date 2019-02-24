@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 COPY package.json gulpfile.js yarn.lock /usr/src/app/
 
 RUN yarn --pure-lockfile
+RUN npm install
 
 # Bundle app source
 COPY . /usr/src/app
