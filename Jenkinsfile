@@ -8,13 +8,13 @@ node {
 
     tag = readFile('commit-id').replace("\n", "").replace("\r", "")
     appName = "edgesoft"
-    registryHost = "127.0.0.1:30400/"
+    registryHost = "127.0.0.1:30912/"
     imageName = "${registryHost}${appName}:${tag}"
     env.BUILDIMG=imageName
 
     stage "Build"
     
-        sh "docker build -t ${imageName} absolootly/edgesoft"
+        sh "docker build -t ${imageName} ."
     
     stage "Push"
 
