@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-kenzan
+  labels:
+    app: hello-kenzan
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: hello-kenzan
+    tier: hello-kenzan
+  type: NodePort
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hello-kenzan
+spec:
+  scaleTargetRef:
+    kind: ReplicaSet
+    name: hello-kenzan
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-kenzan
+  labels:
+    app: hello-kenzan
+spec:
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      labels:
+        app: hello-kenzan
+        tier: hello-kenzan
+    spec:
+      containers:
+      - image: __IMAGE__
+        name: hello-kenzan
+        ports:
+        - containerPort: 80
+          name: hello-kenzan
